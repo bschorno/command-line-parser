@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CommandLineParser.Sample": {
+      "commandName": "Project",
+      "commandLineArgs": "o \"Hallo\""
+    }
+  }
+}

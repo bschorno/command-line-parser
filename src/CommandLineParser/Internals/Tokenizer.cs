@@ -1,0 +1,210 @@
+﻿namespace CommandLineParser.Internals
+{
+    internal class Tokenizer
+    {
+        private readonly ParserBuilder _parserBuilder;
+        private IParserCommand? _currentCommand = null;
+        private int _currentCommandArgumentIndex = 0;
+        
+        private readonly string[] _arguments;
+        private int _position;
+
+        private Queue<Token> _tokenQueue = new Queue<Token>();
+        private TokenType? _requiredType = TokenType.Command;
+
+        public Tokenizer(string[] arguments, ParserBuilder parserBuilder)
+        {
+            _arguments = arguments;
+            _parserBuilder = parserBuilder;
+
+            Scan();
+        }
+
+        public Token? GetNextToken()
+        {
+            if (_tokenQueue.TryDequeue(out var token))
+                return token;
+            return null;
+        }
+
+        public Token? PeekNextToken()
+        {
+            if (_tokenQueue.TryPeek(out var token))
+                return token;
+            return null;
+        }
+
+        private void Scan()
+        {
+            while (Peek() != null)
+            {
+                if (_currentCommand == null)
+                    _requiredType = TokenType.Command;
+
+                Tokenize(Next()!);
+            }
+        }
+
+        private void Tokenize(ReadOnlySpan<char> arg)
+        {
+            if (_requiredType != null)
+            {
+                switch (_requiredType)
+                {
+                    case TokenType.Command:
+                        TokenizeCommand(arg);
+                        break;
+                    case TokenType.Value:
+                        TokenizeValue(arg);
+                        break;
+                }
+            }
+
+            if (arg.StartsWith("--", StringComparison.OrdinalIgnoreCase))
+            {
+                TokenizeLongOption(arg[2..]);
+            }
+            else if (arg.StartsWith("-", StringComparison.OrdinalIgnoreCase))
+            {
+                TokenizeShortOption(arg[1..]);
+            }
+            else if (arg.StartsWith("=", StringComparison.OrdinalIgnoreCase))
+            {
+                TokenizeValue(arg[1..]);
+            }
+            else if (arg.StartsWith("\"", StringComparison.CurrentCultureIgnoreCase))
+            {
+                TokenizeArgument(arg);
+            }
+            else
+            {
+                TokenizeCommand(arg);
+                Token peekedToken = _tokenQueue.Peek();
+                if (peekedToken.Type == TokenType.NotDefined)
+                {
+                    if (_currentCommand!.Arguments.Count > _currentCommandArgumentIndex)
+                    {
+                        _tokenQueue.Dequeue();
+                        TokenizeArgument(arg);
+                    }
+                }
+            }
+        }
+
+        private void TokenizeCommand(ReadOnlySpan<char> arg)
+        {
+            var argTrimmed = arg.Trim();
+            foreach (var command in _currentCommand?.Commands ?? _parserBuilder.Commands)
+            {
+                if (argTrimmed.Equals(command.CommandName, StringComparison.OrdinalIgnoreCase))
+                {
+                    _currentCommand = command;
+                    _tokenQueue.Enqueue(new TokenCommand(_currentCommand, argTrimmed.ToString()));
+                    _requiredType = null;
+                    return;
+                }
+            }
+            _tokenQueue.Enqueue(new Token(TokenType.NotDefined, argTrimmed.ToString()));
+        }
+
+        private void TokenizeLongOption(ReadOnlySpan<char> arg)
+        {
+            var equalsIndex = arg.IndexOf('=');
+            var argTrimmed = arg.Trim();
+            if (equalsIndex > 0)
+                argTrimmed = argTrimmed[..equalsIndex];
+
+            bool found = false;
+            foreach (var option in _currentCommand!.Options)
+            {
+                if (argTrimmed.Equals(option.LongName, StringComparison.OrdinalIgnoreCase))
+                {
+                    _tokenQueue.Enqueue(new TokenOption(option, argTrimmed.ToString()));
+                    if (option.IsRequired)
+                    {
+                        _requiredType = TokenType.Value;
+                    }
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                _tokenQueue.Enqueue(new Token(TokenType.NotDefined, argTrimmed.ToString()));
+
+            if (equalsIndex + 1 > argTrimmed.Length)
+                Tokenize(argTrimmed);
+        }
+
+        private void TokenizeShortOption(ReadOnlySpan<char> arg)
+        {
+            var argTrimmed = arg.Trim();
+
+            bool found = false;
+            foreach (var option in _currentCommand!.Options)
+            {
+                if (argTrimmed[0].Equals(option.ShortName))
+                {
+                    _tokenQueue.Enqueue(new TokenOption(option, argTrimmed[0]));
+                    if (option.IsRequired)
+                    {
+                        _requiredType = TokenType.Value;
+                    }
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                _tokenQueue.Enqueue(new Token(TokenType.NotDefined, argTrimmed.ToString()));
+
+            if (argTrimmed.Length > 1)
+            {
+                if (_requiredType == TokenType.Value)
+                    Tokenize(argTrimmed[1..]);
+                else if (char.IsLetterOrDigit(argTrimmed[1]))
+                    TokenizeShortOption(argTrimmed[1..]);
+                else
+                    Tokenize(argTrimmed[1..]);
+            }   
+        }
+
+        private void TokenizeValue(ReadOnlySpan<char> arg)
+        {
+            var argTrimmed = arg.Trim();
+            if (argTrimmed.StartsWith("="))
+                argTrimmed = argTrimmed[1..];
+
+            if (argTrimmed.Length == 0)
+            {
+                _requiredType = TokenType.Value;
+                return;
+            }
+
+            _tokenQueue.Enqueue(new TokenValue(argTrimmed.ToString()));
+            _requiredType = null;
+        }
+
+        private void TokenizeArgument(ReadOnlySpan<char> arg)
+        {
+            var argTrimmed = arg.Trim();
+
+            _tokenQueue.Enqueue(new TokenArgument(_currentCommand!.Arguments[_currentCommandArgumentIndex], arg.ToString()));
+            _currentCommandArgumentIndex++;
+        }
+
+        private string? Peek()
+        {
+            if (_position >= _arguments.Length)
+            {
+                return null;
+            }
+            return _arguments[_position];
+        }
+
+        private string? Next()
+        {
+            var current = Peek();
+            _position++;
+            return current;
+        }
+    }
+}
