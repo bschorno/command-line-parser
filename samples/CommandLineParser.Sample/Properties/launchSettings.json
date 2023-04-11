@@ -2,7 +2,7 @@
   "profiles": {
     "CommandLineParser.Sample": {
       "commandName": "Project",
-      "commandLineArgs": "o \"Hallo\""
+      "commandLineArgs": "config \"file.txt\" add -o = true"
     }
   }
 }

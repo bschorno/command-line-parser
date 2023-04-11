@@ -16,7 +16,7 @@ namespace CommandLineParser.Internals
 
         public void AddCommand(IParserCommand parserCommand)
         {
-            _commands.Add(parserCommand.CreateParserResultCommand(GetTopParserResultCommand());
+            _commands.Add(parserCommand.CreateParserResultCommand(GetTopParserResultCommand()));
         }
 
         public void AddAttribute(IParserAttribute attribute, string? value)
@@ -29,7 +29,7 @@ namespace CommandLineParser.Internals
 
         private IParserResultCommand? GetTopParserResultCommand()
         {
-            return _commands.Count > 0 ? _commands[_commands.Count - 1] : null);
+            return _commands.Count > 0 ? _commands[_commands.Count - 1] : null;
         }
     }
 }

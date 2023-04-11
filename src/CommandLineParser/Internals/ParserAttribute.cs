@@ -20,6 +20,7 @@ namespace CommandLineParser.Internals
     internal abstract class ParserAttribute<TCommand, TAttribute> : ParserAttribute, IParserAttribute<TAttribute>, IParserAttribute
     {
         private readonly Expression<Func<TCommand, TAttribute>> _propertySelector;
+        private readonly ITypeParser<TAttribute> _typeParser;
 
         private TAttribute? _defaultValue;
 
@@ -27,6 +28,7 @@ namespace CommandLineParser.Internals
             : base()
         {
             _propertySelector = propertySelector;
+            _typeParser = TypeParser.GetTypeParser<TAttribute>() ?? throw new Exception("Type not supported");
         }
 
         public IParserAttribute<TAttribute> Required(bool required = true)
@@ -48,6 +50,21 @@ namespace CommandLineParser.Internals
                 return;
 
             var propertyInfo = (PropertyInfo)((MemberExpression)_propertySelector.Body).Member;
+
+            TAttribute? propertyValue = default;
+
+            if (value == null && _defaultValue != null)
+                propertyValue = _defaultValue;
+            else if (value != null)
+            {
+                if (_typeParser.CanParse(value))
+                    propertyValue = _typeParser.Parse(value);
+                else
+                    throw new Exception("Can't parse value");
+            }
+
+            if (propertyValue != null)
+                propertyInfo.SetValue(objectReference, propertyValue, null);
         }
     }
 }

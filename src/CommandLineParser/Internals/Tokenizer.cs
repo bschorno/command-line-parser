@@ -53,12 +53,15 @@
                 {
                     case TokenType.Command:
                         TokenizeCommand(arg);
-                        break;
+                        return;
                     case TokenType.Value:
                         TokenizeValue(arg);
-                        break;
+                        return;
                 }
             }
+
+            if (_currentCommand == null)
+                return;
 
             if (arg.StartsWith("--", StringComparison.OrdinalIgnoreCase))
             {
@@ -79,7 +82,7 @@
             else
             {
                 TokenizeCommand(arg);
-                Token peekedToken = _tokenQueue.Peek();
+                Token peekedToken = _tokenQueue.Last();
                 if (peekedToken.Type == TokenType.NotDefined)
                 {
                     if (_currentCommand!.Arguments.Count > _currentCommandArgumentIndex)
