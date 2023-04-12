@@ -5,8 +5,6 @@ namespace CommandLineParser.Internals
     {
         private readonly List<IParserResultCommand> _commands = new List<IParserResultCommand>();
 
-        public bool HasErrors { get; internal set; }
-
         public IEnumerable<IParserResultCommand> Commands => _commands;
 
         public ParserResult()

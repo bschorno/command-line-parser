@@ -17,8 +17,8 @@ namespace CommandLineParser.Sample
                 });
                 _.AddCommand<ConfigRemoveParameters>("remove", command => command.RemoveParameters!, removeCommand =>
                 {
-                    removeCommand.AddOption('a', "all_instances", attr => attr.AllInstances);
-                    removeCommand.AddOption('n', "no_database_update", attr => attr.NoDatabaseUpdate);
+                    removeCommand.AddOption('a', "all-instances", attr => attr.AllInstances);
+                    removeCommand.AddOption('n', "no-database-update", attr => attr.NoDatabaseUpdate);
                 });
             });
 

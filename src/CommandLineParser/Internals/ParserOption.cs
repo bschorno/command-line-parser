@@ -17,6 +17,9 @@ namespace CommandLineParser.Internals
         {
             _shortName = shortName;
             _longName = longName;
+
+            if (typeof(TAttribute) == typeof(bool))
+                GetType().GetMethod(nameof(Default))!.Invoke(this, new object[] { true });
         }
     }
 }

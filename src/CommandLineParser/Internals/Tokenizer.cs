@@ -9,7 +9,7 @@
         private readonly string[] _arguments;
         private int _position;
 
-        private Queue<Token> _tokenQueue = new Queue<Token>();
+        private List<Token> _tokenList = new List<Token>();
         private TokenType? _requiredType = TokenType.Command;
 
         public Tokenizer(string[] arguments, ParserBuilder parserBuilder)
@@ -22,15 +22,19 @@
 
         public Token? GetNextToken()
         {
-            if (_tokenQueue.TryDequeue(out var token))
+            if (_tokenList.Count > 0)
+            {
+                Token token = _tokenList[0];
+                _tokenList.RemoveAt(0);
                 return token;
+            }
             return null;
         }
 
         public Token? PeekNextToken()
         {
-            if (_tokenQueue.TryPeek(out var token))
-                return token;
+            if (_tokenList.Count > 0)
+                return _tokenList[0];
             return null;
         }
 
@@ -82,12 +86,12 @@
             else
             {
                 TokenizeCommand(arg);
-                Token peekedToken = _tokenQueue.Last();
-                if (peekedToken.Type == TokenType.NotDefined)
+                Token lastAddedToken = _tokenList.Last();
+                if (lastAddedToken.Type == TokenType.NotDefined)
                 {
                     if (_currentCommand!.Arguments.Count > _currentCommandArgumentIndex)
                     {
-                        _tokenQueue.Dequeue();
+                        _tokenList.RemoveAt(_tokenList.Count - 1);
                         TokenizeArgument(arg);
                     }
                 }
@@ -102,12 +106,12 @@
                 if (argTrimmed.Equals(command.CommandName, StringComparison.OrdinalIgnoreCase))
                 {
                     _currentCommand = command;
-                    _tokenQueue.Enqueue(new TokenCommand(_currentCommand, argTrimmed.ToString()));
+                    _tokenList.Add(new TokenCommand(_currentCommand, argTrimmed.ToString()));
                     _requiredType = null;
                     return;
                 }
             }
-            _tokenQueue.Enqueue(new Token(TokenType.NotDefined, argTrimmed.ToString()));
+            _tokenList.Add(new Token(TokenType.NotDefined, argTrimmed.ToString()));
         }
 
         private void TokenizeLongOption(ReadOnlySpan<char> arg)
@@ -122,7 +126,7 @@
             {
                 if (argTrimmed.Equals(option.LongName, StringComparison.OrdinalIgnoreCase))
                 {
-                    _tokenQueue.Enqueue(new TokenOption(option, argTrimmed.ToString()));
+                    _tokenList.Add(new TokenOption(option, argTrimmed.ToString()));
                     if (option.IsRequired)
                     {
                         _requiredType = TokenType.Value;
@@ -132,7 +136,7 @@
                 }
             }
             if (!found)
-                _tokenQueue.Enqueue(new Token(TokenType.NotDefined, argTrimmed.ToString()));
+                _tokenList.Add(new Token(TokenType.NotDefined, argTrimmed.ToString()));
 
             if (equalsIndex + 1 > argTrimmed.Length)
                 Tokenize(argTrimmed);
@@ -147,7 +151,7 @@
             {
                 if (argTrimmed[0].Equals(option.ShortName))
                 {
-                    _tokenQueue.Enqueue(new TokenOption(option, argTrimmed[0]));
+                    _tokenList.Add(new TokenOption(option, argTrimmed[0]));
                     if (option.IsRequired)
                     {
                         _requiredType = TokenType.Value;
@@ -157,7 +161,7 @@
                 }
             }
             if (!found)
-                _tokenQueue.Enqueue(new Token(TokenType.NotDefined, argTrimmed.ToString()));
+                _tokenList.Add(new Token(TokenType.NotDefined, argTrimmed.ToString()));
 
             if (argTrimmed.Length > 1)
             {
@@ -182,7 +186,7 @@
                 return;
             }
 
-            _tokenQueue.Enqueue(new TokenValue(argTrimmed.ToString()));
+            _tokenList.Add(new TokenValue(argTrimmed.ToString()));
             _requiredType = null;
         }
 
@@ -190,7 +194,7 @@
         {
             var argTrimmed = arg.Trim();
 
-            _tokenQueue.Enqueue(new TokenArgument(_currentCommand!.Arguments[_currentCommandArgumentIndex], arg.ToString()));
+            _tokenList.Add(new TokenArgument(_currentCommand!.Arguments[_currentCommandArgumentIndex], arg.ToString()));
             _currentCommandArgumentIndex++;
         }
 

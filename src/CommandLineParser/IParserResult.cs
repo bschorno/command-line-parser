@@ -2,8 +2,6 @@
 {
     public interface IParserResult
     {
-        bool HasErrors { get; }
-
         IEnumerable<IParserResultCommand> Commands { get; }
     }
 }

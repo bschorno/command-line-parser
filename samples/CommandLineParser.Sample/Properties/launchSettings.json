@@ -2,7 +2,7 @@
   "profiles": {
     "CommandLineParser.Sample": {
       "commandName": "Project",
-      "commandLineArgs": "config \"file.txt\" add -o = true"
+      "commandLineArgs": "config \"file.txt\" remove --all-instances"
     }
   }
 }

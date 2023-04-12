@@ -20,8 +20,7 @@
                 switch (token.Type)
                 {
                     case TokenType.NotDefined:
-                        result.HasErrors = true;
-                        break;
+                        throw new NotDefinedTokenException(token);
 
                     case TokenType.Command:
                         result.AddCommand(((TokenCommand)token).Command);
@@ -39,12 +38,6 @@
                         else
                             result.AddAttribute(((TokenOption)token).Option, null);
                         break;
-
-                    case TokenType.Equals:
-                        throw new Exception("Should not be happending");
-                        
-                    case TokenType.Value:
-                        throw new Exception("Should not be happending");
 
                     default:
                         break;
