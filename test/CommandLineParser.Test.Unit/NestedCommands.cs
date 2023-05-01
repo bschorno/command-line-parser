@@ -153,5 +153,71 @@ namespace CommandLineParser.Test.Unit
             Assert.True(configRemoveParameters.AllInstances);
             Assert.True(configRemoveParameters.NoDatabaseUpdate);
         }
+
+        [Fact]
+        public void Test7()
+        {
+            var result = _parser.Parse(new string[] { "config", "remove", "--all-instances=true", "--no-database-update=false" });
+
+            var firstCommand = result.Commands.FirstOrDefault();
+
+            Assert.NotNull(firstCommand);
+            Assert.Equal("config", firstCommand.Command);
+
+            var secondCommand = result.Commands.Last();
+
+            Assert.NotNull(secondCommand);
+            Assert.Equal("remove", secondCommand.Command);
+
+            var configRemoveParameters = secondCommand.GetObject<ConfigRemoveParameters>();
+
+            Assert.NotNull(configRemoveParameters);
+            Assert.True(configRemoveParameters.AllInstances);
+            Assert.False(configRemoveParameters.NoDatabaseUpdate);
+        }
+
+        [Fact]
+        public void Test8()
+        {
+            var result = _parser.Parse(new string[] { "config", "remove", "-a=true", "-n=false" });
+
+            var firstCommand = result.Commands.FirstOrDefault();
+
+            Assert.NotNull(firstCommand);
+            Assert.Equal("config", firstCommand.Command);
+
+            var secondCommand = result.Commands.Last();
+
+            Assert.NotNull(secondCommand);
+            Assert.Equal("remove", secondCommand.Command);
+
+            var configRemoveParameters = secondCommand.GetObject<ConfigRemoveParameters>();
+
+            Assert.NotNull(configRemoveParameters);
+            Assert.True(configRemoveParameters.AllInstances);
+            Assert.False(configRemoveParameters.NoDatabaseUpdate);
+        }
+
+        [Fact]
+        public void Test9()
+        {
+            var result = _parser.Parse(new string[] { "config", "remove", "-an=false" });
+
+            var firstCommand = result.Commands.FirstOrDefault();
+
+            Assert.NotNull(firstCommand);
+            Assert.Equal("config", firstCommand.Command);
+
+            var secondCommand = result.Commands.Last();
+
+            Assert.NotNull(secondCommand);
+            Assert.Equal("remove", secondCommand.Command);
+
+            var configRemoveParameters = secondCommand.GetObject<ConfigRemoveParameters>();
+
+            Assert.NotNull(configRemoveParameters);
+            Assert.True(configRemoveParameters.AllInstances);
+            Assert.False(configRemoveParameters.NoDatabaseUpdate);
+        }
     }
 }

@@ -138,8 +138,11 @@
             if (!found)
                 _tokenList.Add(new Token(TokenType.NotDefined, argTrimmed.ToString()));
 
-            if (equalsIndex + 1 > argTrimmed.Length)
-                Tokenize(argTrimmed);
+            if (++equalsIndex > argTrimmed.Length)
+            {
+                _requiredType = TokenType.Value;
+                Tokenize(arg[equalsIndex..]);
+            }
         }
 
         private void TokenizeShortOption(ReadOnlySpan<char> arg)
