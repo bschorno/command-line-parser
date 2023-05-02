@@ -11,14 +11,22 @@ namespace CommandLineParser.Sample
             parserBuilder.AddCommand<ConfigParameters>("config", _ =>
             {
                 _.AddArgument(attr => attr.Path).Required();
+
                 _.AddCommand<ConfigAddParameters>("add", command => command.AddParameters!, addCommand =>
                 {
                     addCommand.AddOption('o', "overwrite", attr => attr.Overwrite);
+                }).Callback(parameters =>
+                {
+                    Console.WriteLine("Command 'add' was selected");
                 });
+
                 _.AddCommand<ConfigRemoveParameters>("remove", command => command.RemoveParameters!, removeCommand =>
                 {
                     removeCommand.AddOption('a', "all-instances", attr => attr.AllInstances);
                     removeCommand.AddOption('n', "no-database-update", attr => attr.NoDatabaseUpdate);
+                }).Callback(parameters =>
+                {
+                    Console.WriteLine("Command 'remove' was selected");
                 });
             });
 

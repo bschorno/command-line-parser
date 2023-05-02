@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace CommandLineParser.Internals
 {
@@ -29,10 +28,18 @@ namespace CommandLineParser.Internals
 
     internal class ParserCommand<TCommand> : ParserCommand, IParserCommand<TCommand> where TCommand : new()
     {
+        protected Action<TCommand>? _callback;
+
         public ParserCommand(string commandName)
             : base(commandName)
         {
             
+        }
+
+        public IParserCommand<TCommand> Callback(Action<TCommand> callback)
+        {
+            _callback = callback;
+            return this;
         }
 
         public IParserCommand<TCommand> AddCommand(string commandName)
@@ -93,11 +100,11 @@ namespace CommandLineParser.Internals
 
         public override IParserResultCommand CreateParserResultCommand(IParserResultCommand? parentResultCommand)
         {
-            return new ParserResultCommand<TCommand>(_commandName, new TCommand());
+            return new ParserResultCommand<TCommand>(_commandName, new TCommand(), _callback);
         }
     }
 
-    internal class ParserCommand<TParentCommand, TCommand> : ParserCommand<TCommand> where TCommand : new()
+    internal class ParserCommand<TParentCommand, TCommand> : ParserCommand<TCommand> where TCommand : new() where TParentCommand : new()
     {
         private readonly Expression<Func<TParentCommand, TCommand>> _propertySelector;
 
@@ -116,7 +123,7 @@ namespace CommandLineParser.Internals
             var objectReference = new TCommand();
             propertyInfo.SetValue(parentResultCommand.GetObject<TParentCommand>(), objectReference, null);
 
-            return new ParserResultCommand<TCommand>(_commandName, objectReference);
+            return new ParserResultCommand<TCommand>(_commandName, objectReference, _callback);
         }
     }
 }

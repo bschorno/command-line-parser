@@ -2,7 +2,7 @@
 
 namespace CommandLineParser.Internals
 {
-    internal class ParserOption<TCommand, TAttribute> : ParserAttribute<TCommand, TAttribute>, IParserOption<TAttribute>, IParserOption
+    internal class ParserOption<TCommand, TAttribute> : ParserAttribute<TCommand, TAttribute>, IParserOption<TAttribute>, IParserOption where TCommand : new()
     {
         private readonly char _shortName;
         private readonly string _longName;

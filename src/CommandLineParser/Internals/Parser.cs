@@ -44,6 +44,12 @@
                 }
             }
 
+            foreach (var command in result.Commands)
+            {
+                var parserResultCommand = command as ParserResultCommand;
+                parserResultCommand?.InvokeCallback();
+            }
+
             return result;
         }
     }

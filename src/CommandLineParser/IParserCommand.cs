@@ -5,6 +5,8 @@ namespace CommandLineParser
 {
     public interface IParserCommand<T> where T : new()
     {
+        IParserCommand<T> Callback(Action<T> callback);
+
         IParserCommand<T> AddCommand(string commandName);
 
         IParserCommand<T> AddCommand(string commandName, Action<IParserCommand<T>>? buildingAction);

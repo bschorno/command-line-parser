@@ -4,7 +4,7 @@
     {
         string Command { get; }
 
-        T? GetObject<T>();
+        T? GetObject<T>() where T : new();
     }
 
     public interface IParserResultCommand<TCommand> : IParserResultCommand

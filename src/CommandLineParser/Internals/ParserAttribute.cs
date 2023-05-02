@@ -17,7 +17,7 @@ namespace CommandLineParser.Internals
         public abstract void ParseValue(IParserResultCommand parentResultCommand, string? value);
     }
 
-    internal abstract class ParserAttribute<TCommand, TAttribute> : ParserAttribute, IParserAttribute<TAttribute>, IParserAttribute
+    internal abstract class ParserAttribute<TCommand, TAttribute> : ParserAttribute, IParserAttribute<TAttribute>, IParserAttribute where TCommand : new()
     {
         private readonly Expression<Func<TCommand, TAttribute>> _propertySelector;
         private readonly ITypeParser<TAttribute> _typeParser;
