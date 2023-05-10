@@ -1,4 +1,4 @@
-﻿namespace CommandLineParser.Internals
+﻿namespace CommandLineParser.Internals.TypeParsers
 {
     internal class TypeParserInt : ITypeParser<int>
     {

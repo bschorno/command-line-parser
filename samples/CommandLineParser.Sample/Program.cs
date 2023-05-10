@@ -30,8 +30,7 @@ namespace CommandLineParser.Sample
                 });
             });
 
-            var parser = parserBuilder.Build();
-            var result = parser.Parse(args);
+            var result = parserBuilder.Build().Parse(args);
         }
 
         public class ConfigParameters
