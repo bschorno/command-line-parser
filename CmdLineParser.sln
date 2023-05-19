@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CmdLineParser", "src\CommandLineParser\CmdLineParser.csproj", "{DB36E65B-C199-4453-B7F2-CE117C48284A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CmdLineParser", "src\CmdLineParser\CmdLineParser.csproj", "{DB36E65B-C199-4453-B7F2-CE117C48284A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CmdLineParser.Test.Unit", "test\CommandLineParser.Test.Unit\CmdLineParser.Test.Unit.csproj", "{06185242-E000-4EC6-A549-68566142AA68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CmdLineParser.Test.Unit", "test\CmdLineParser.Test.Unit\CmdLineParser.Test.Unit.csproj", "{06185242-E000-4EC6-A549-68566142AA68}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CmdLineParser.Sample", "samples\CommandLineParser.Sample\CmdLineParser.Sample.csproj", "{30C35DA2-0344-4871-9BAD-AACE7D958890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CmdLineParser.Sample", "samples\CmdLineParser.Sample\CmdLineParser.Sample.csproj", "{30C35DA2-0344-4871-9BAD-AACE7D958890}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
