@@ -1,4 +1,6 @@
-﻿namespace CmdLineParser.Internals
+﻿using CmdLineParser.Internals.TypeParsers;
+
+namespace CmdLineParser.Internals
 {
     internal static class TypeParser
     {

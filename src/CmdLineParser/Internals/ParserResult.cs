@@ -1,5 +1,4 @@
-﻿
-using CmdLineParser;
+﻿using CmdLineParser;
 
 namespace CmdLineParser.Internals
 {

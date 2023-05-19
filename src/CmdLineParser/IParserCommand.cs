@@ -1,5 +1,4 @@
-﻿using CommandLineParser.Internals;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace CmdLineParser
 {

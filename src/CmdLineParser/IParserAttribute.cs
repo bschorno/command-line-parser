@@ -1,6 +1,4 @@
-﻿using CommandLineParser.Internals;
-
-namespace CmdLineParser
+﻿namespace CmdLineParser
 {
     public interface IParserAttribute<T>
     {

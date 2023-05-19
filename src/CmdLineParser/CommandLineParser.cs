@@ -1,4 +1,4 @@
-﻿using CommandLineParser.Internals;
+﻿using CmdLineParser.Internals;
 
 namespace CmdLineParser
 {
