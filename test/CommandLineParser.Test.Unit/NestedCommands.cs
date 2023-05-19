@@ -1,4 +1,6 @@
-namespace CommandLineParser.Test.Unit
+using CmdLineParser;
+
+namespace CmdLineParser.Test.Unit
 {
     public class NestedCommands
     {
@@ -8,7 +10,7 @@ namespace CommandLineParser.Test.Unit
             public ConfigAddParameters? AddParameters { get; set; }
             public ConfigRemoveParameters? RemoveParameters { get; set; }
         }
-        
+
         private class ConfigAddParameters
         {
             public bool Overwrite { get; set; }
@@ -28,11 +30,11 @@ namespace CommandLineParser.Test.Unit
             parserBuilder.AddCommand<ConfigParameters>("config", _ =>
             {
                 _.AddArgument(attr => attr.Path).Required();
-                _.AddCommand<ConfigAddParameters>("add", command => command.AddParameters!, addCommand =>
+                _.AddCommand("add", command => command.AddParameters!, addCommand =>
                 {
                     addCommand.AddOption('o', "overwrite", attr => attr.Overwrite);
                 });
-                _.AddCommand<ConfigRemoveParameters>("remove", command => command.RemoveParameters!, removeCommand =>
+                _.AddCommand("remove", command => command.RemoveParameters!, removeCommand =>
                 {
                     removeCommand.AddOption('a', "all-instances", attr => attr.AllInstances);
                     removeCommand.AddOption('n', "no-database-update", attr => attr.NoDatabaseUpdate);

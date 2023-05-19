@@ -1,8 +1,8 @@
-﻿namespace CommandLineParser.Internals
+﻿namespace CmdLineParser.Internals
 {
     internal static class TypeParser
     {
-        private static readonly Dictionary<Type, ITypeParser> _typeParsers = new Dictionary<Type, Internals.ITypeParser>();
+        private static readonly Dictionary<Type, ITypeParser> _typeParsers = new Dictionary<Type, ITypeParser>();
 
         static TypeParser()
         {

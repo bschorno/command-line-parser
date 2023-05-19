@@ -1,4 +1,4 @@
-﻿namespace CommandLineParser
+﻿namespace CmdLineParser
 {
     public interface IParserArgument<T> : IParserAttribute<T>
     {

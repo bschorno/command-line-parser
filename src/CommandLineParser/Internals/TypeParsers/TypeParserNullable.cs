@@ -1,4 +1,6 @@
-﻿namespace CommandLineParser.Internals.TypeParsers
+﻿using CmdLineParser.Internals;
+
+namespace CmdLineParser.Internals.TypeParsers
 {
     internal class TypeParserNullable<T> : ITypeParser<T?>
     {

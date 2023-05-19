@@ -1,6 +1,6 @@
 ﻿using CommandLineParser.Internals;
 
-namespace CommandLineParser
+namespace CmdLineParser
 {
     public static class CommandLineParser
     {

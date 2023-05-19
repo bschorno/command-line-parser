@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CommandLineParser.Internals
+namespace CmdLineParser.Internals
 {
     internal abstract class ParserAttribute : IParserAttribute
     {
@@ -9,9 +9,9 @@ namespace CommandLineParser.Internals
 
         public bool IsRequired => _required;
 
-        protected ParserAttribute() 
-        { 
-            
+        protected ParserAttribute()
+        {
+
         }
 
         public abstract void ParseValue(IParserResultCommand parentResultCommand, string? value);

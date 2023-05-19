@@ -1,4 +1,4 @@
-﻿namespace CommandLineParser.Internals
+﻿namespace CmdLineParser.Internals
 {
     internal sealed class TokenValue : Token
     {

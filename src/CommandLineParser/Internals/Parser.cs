@@ -1,4 +1,6 @@
-﻿namespace CommandLineParser.Internals
+﻿using CmdLineParser;
+
+namespace CmdLineParser.Internals
 {
     internal class Parser : IParser
     {

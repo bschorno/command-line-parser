@@ -1,4 +1,4 @@
-﻿namespace CommandLineParser.Internals
+﻿namespace CmdLineParser.Internals
 {
     internal interface IParserOption : IParserAttribute
     {

@@ -1,6 +1,6 @@
-﻿using CommandLineParser.Internals;
+﻿using CmdLineParser.Internals;
 
-namespace CommandLineParser
+namespace CmdLineParser
 {
     public class NotDefinedTokenException : ParserException
     {
@@ -8,7 +8,7 @@ namespace CommandLineParser
 
         internal Token Token => _token;
 
-        public override string Message 
+        public override string Message
         {
             get
             {

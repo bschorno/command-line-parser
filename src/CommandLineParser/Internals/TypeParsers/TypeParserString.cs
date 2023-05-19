@@ -1,4 +1,4 @@
-﻿namespace CommandLineParser.Internals.TypeParsers
+﻿namespace CmdLineParser.Internals.TypeParsers
 {
     internal class TypeParserString : ITypeParser<string>
     {

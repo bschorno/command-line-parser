@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CommandLineParser.Internals
+namespace CmdLineParser.Internals
 {
     internal abstract class ParserCommand : IParserCommand
     {
@@ -33,7 +33,7 @@ namespace CommandLineParser.Internals
         public ParserCommand(string commandName)
             : base(commandName)
         {
-            
+
         }
 
         public IParserCommand<TCommand> Callback(Action<TCommand> callback)

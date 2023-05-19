@@ -1,4 +1,4 @@
-﻿namespace CommandLineParser.Internals
+﻿namespace CmdLineParser.Internals
 {
     internal abstract class ParserResultCommand : IParserResultCommand
     {
@@ -6,7 +6,7 @@
 
         public string Command => _command;
 
-        protected ParserResultCommand(string command) 
+        protected ParserResultCommand(string command)
         {
             _command = command;
         }
@@ -18,7 +18,7 @@
 
     internal class ParserResultCommand<TCommand> : ParserResultCommand, IParserResultCommand<TCommand>
     {
-        
+
         private Action<TCommand>? _callback;
         private TCommand _object;
 

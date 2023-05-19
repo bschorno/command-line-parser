@@ -17,7 +17,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/bschorno/command-line-parser</RepositoryUrl>
-    <AssemblyName>CLIParser</AssemblyName>
+    <AssemblyName>CmdLineParser</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

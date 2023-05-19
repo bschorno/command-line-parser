@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using CommandLineParser.Internals;
+using System.Linq.Expressions;
 
-namespace CommandLineParser.Internals
+namespace CmdLineParser.Internals
 {
     internal class ParserBuilder : IParserBuilder
     {

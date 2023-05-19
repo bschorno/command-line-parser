@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using CmdLineParser;
+using System.Linq.Expressions;
 
-namespace CommandLineParser.Internals
+namespace CmdLineParser.Internals
 {
     internal class ParserOption<TCommand, TAttribute> : ParserAttribute<TCommand, TAttribute>, IParserOption<TAttribute>, IParserOption where TCommand : new()
     {

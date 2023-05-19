@@ -1,11 +1,13 @@
-﻿namespace CommandLineParser.Internals
+﻿using CommandLineParser.Internals;
+
+namespace CmdLineParser.Internals
 {
     internal class Tokenizer
     {
         private readonly ParserBuilder _parserBuilder;
         private IParserCommand? _currentCommand = null;
         private int _currentCommandArgumentIndex = 0;
-        
+
         private readonly string[] _arguments;
         private int _position;
 
@@ -174,7 +176,7 @@
                     TokenizeShortOption(argTrimmed[1..]);
                 else
                     Tokenize(argTrimmed[1..]);
-            }   
+            }
         }
 
         private void TokenizeValue(ReadOnlySpan<char> arg)
