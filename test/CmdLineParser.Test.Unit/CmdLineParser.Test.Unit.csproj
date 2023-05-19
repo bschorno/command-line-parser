@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CommandLineParser\CmdLineParser.csproj" />
+    <ProjectReference Include="..\..\src\CmdLineParser\CmdLineParser.csproj" />
   </ItemGroup>
 
 </Project>
