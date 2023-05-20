@@ -10,6 +10,6 @@
 
         IReadOnlyList<IParserOption> Options { get; }
 
-        IParserResultCommand CreateParserResultCommand(IParserResultCommand? parentResultCommand);
+        IParserResultCommand CreateParserResultCommand(ParserResult parserResult);
     }
 }

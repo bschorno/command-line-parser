@@ -13,7 +13,7 @@
                 _.AddCommand("add", command => command.AddParameters!, addCommand =>
                 {
                     addCommand.AddOption('o', "overwrite", attr => attr.Overwrite);
-                }).Callback(parameters =>
+                }).Callback((configParameters, configAddParameters) =>
                 {
                     Console.WriteLine("Command 'add' was selected");
                 });
@@ -22,7 +22,7 @@
                 {
                     removeCommand.AddOption('a', "all-instances", attr => attr.AllInstances);
                     removeCommand.AddOption('n', "no-database-update", attr => attr.NoDatabaseUpdate);
-                }).Callback(parameters =>
+                }).Callback((configParameters, configRemoveParameters) =>
                 {
                     Console.WriteLine("Command 'remove' was selected");
                 });

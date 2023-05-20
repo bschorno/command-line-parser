@@ -15,20 +15,20 @@ namespace CmdLineParser.Internals
 
         public void AddCommand(IParserCommand parserCommand)
         {
-            _commands.Add(parserCommand.CreateParserResultCommand(GetTopParserResultCommand()));
+            _commands.Add(parserCommand.CreateParserResultCommand(this));
         }
 
         public void AddAttribute(IParserAttribute attribute, string? value)
         {
-            var parentResultCommand = GetTopParserResultCommand();
+            var parentResultCommand = _commands.Last();
             if (parentResultCommand == null)
                 return;
             attribute.ParseValue(parentResultCommand, value);
         }
 
-        private IParserResultCommand? GetTopParserResultCommand()
+        internal IParserResultCommand GetParserResultCommand(int level)
         {
-            return _commands.Count > 0 ? _commands[_commands.Count - 1] : null;
+            return _commands[level];
         }
     }
 }
