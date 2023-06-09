@@ -11,9 +11,9 @@
     <Authors>bschorno</Authors>
     <Company></Company>
     <Copyright>Copyright (c) 2023 Bruno Schorno</Copyright>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
-    <Version>0.1.0</Version>
+    <AssemblyVersion>0.1.1.0</AssemblyVersion>
+    <FileVersion>0.1.1.0</FileVersion>
+    <Version>0.1.1</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/bschorno/command-line-parser</RepositoryUrl>
