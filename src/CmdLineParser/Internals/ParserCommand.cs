@@ -23,7 +23,7 @@ namespace CmdLineParser.Internals
             _commandName = commandName;
         }
 
-        public abstract IParserResultCommand CreateParserResultCommand(ParserResult parserResult);
+        public abstract ParserResultCommand CreateParserResultCommand(ParserResult parserResult);
     }
 
     internal class ParserCommand<T1> : ParserCommand, IParserCommand<T1> where T1 : new()
@@ -84,25 +84,25 @@ namespace CmdLineParser.Internals
             return option;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T1, K>> propertySelector)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T1, K>> propertySelector)
         {
-            var argument = new ParserArgument<T1, K>(propertySelector);
+            var argument = new ParserArgument<T1, K>(name, propertySelector);
             _arguments.Add(argument);
             return argument;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T1, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T1, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
         {
-            var argument = AddArgument(propertySelector);
+            var argument = AddArgument(name, propertySelector);
             buildingAction?.Invoke(argument);
             return argument;
         }
 
-        public override IParserResultCommand CreateParserResultCommand(ParserResult parserResult)
+        public override ParserResultCommand CreateParserResultCommand(ParserResult parserResult)
         {
             var objectReference = new T1();
 
-            var resultCommand = new ParserResultCommand<T1>(_commandName, objectReference);
+            var resultCommand = new ParserResultCommand<T1>(this, objectReference);
             if (_callback != null)
             {
                 T1 parameter1 = objectReference;
@@ -171,28 +171,28 @@ namespace CmdLineParser.Internals
             return option;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T2, K>> propertySelector)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T2, K>> propertySelector)
         {
-            var argument = new ParserArgument<T2, K>(propertySelector);
+            var argument = new ParserArgument<T2, K>(name, propertySelector);
             _arguments.Add(argument);
             return argument;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T2, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T2, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
         {
-            var argument = AddArgument(propertySelector);
+            var argument = AddArgument(name, propertySelector);
             buildingAction?.Invoke(argument);
             return argument;
         }
 
-        public override IParserResultCommand CreateParserResultCommand(ParserResult parserResult)
+        public override ParserResultCommand CreateParserResultCommand(ParserResult parserResult)
         {
             var propertyInfo = (PropertyInfo)((MemberExpression)_propertySelector.Body).Member;
             var objectReference = new T2();
             var parentReference = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
             propertyInfo.SetValue(parentReference, objectReference, null);
 
-            var resultCommand = new ParserResultCommand<T2>(_commandName, objectReference);
+            var resultCommand = new ParserResultCommand<T2>(this, objectReference);
             if (_callback != null)
             {
                 T1 parameter1 = parentReference;
@@ -262,28 +262,28 @@ namespace CmdLineParser.Internals
             return option;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T3, K>> propertySelector)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T3, K>> propertySelector)
         {
-            var argument = new ParserArgument<T3, K>(propertySelector);
+            var argument = new ParserArgument<T3, K>(name, propertySelector);
             _arguments.Add(argument);
             return argument;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T3, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T3, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
         {
-            var argument = AddArgument(propertySelector);
+            var argument = AddArgument(name, propertySelector);
             buildingAction?.Invoke(argument);
             return argument;
         }
 
-        public override IParserResultCommand CreateParserResultCommand(ParserResult parserResult)
+        public override ParserResultCommand CreateParserResultCommand(ParserResult parserResult)
         {
             var propertyInfo = (PropertyInfo)((MemberExpression)_propertySelector.Body).Member;
             var objectReference = new T3();
             var parentReference = parserResult.GetParserResultCommand(1).GetObject<T2>()!;
             propertyInfo.SetValue(parentReference, objectReference, null);
 
-            var resultCommand = new ParserResultCommand<T3>(_commandName, objectReference);
+            var resultCommand = new ParserResultCommand<T3>(this, objectReference);
             if (_callback != null)
             {
                 T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
@@ -326,28 +326,28 @@ namespace CmdLineParser.Internals
             return option;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T4, K>> propertySelector)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T4, K>> propertySelector)
         {
-            var argument = new ParserArgument<T4, K>(propertySelector);
+            var argument = new ParserArgument<T4, K>(name, propertySelector);
             _arguments.Add(argument);
             return argument;
         }
 
-        public IParserArgument<K> AddArgument<K>(Expression<Func<T4, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
+        public IParserArgument<K> AddArgument<K>(string name, Expression<Func<T4, K>> propertySelector, Action<IParserArgument<K>>? buildingAction)
         {
-            var argument = AddArgument(propertySelector);
+            var argument = AddArgument(name, propertySelector);
             buildingAction?.Invoke(argument);
             return argument;
         }
 
-        public override IParserResultCommand CreateParserResultCommand(ParserResult parserResult)
+        public override ParserResultCommand CreateParserResultCommand(ParserResult parserResult)
         {
             var propertyInfo = (PropertyInfo)((MemberExpression)_propertySelector.Body).Member;
             var objectReference = new T4();
             var parentReference = parserResult.GetParserResultCommand(2).GetObject<T3>()!;
             propertyInfo.SetValue(parentReference, objectReference, null);
 
-            var resultCommand = new ParserResultCommand<T4>(_commandName, objectReference);
+            var resultCommand = new ParserResultCommand<T4>(this, objectReference);
             if (_callback != null)
             {
                 T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;

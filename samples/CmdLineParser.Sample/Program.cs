@@ -8,7 +8,7 @@
 
             parserBuilder.AddCommand<ConfigParameters>("config", _ =>
             {
-                _.AddArgument(attr => attr.Path).Required();
+                _.AddArgument("path", attr => attr.Path).Required();
 
                 _.AddCommand("add", command => command.AddParameters!, addCommand =>
                 {

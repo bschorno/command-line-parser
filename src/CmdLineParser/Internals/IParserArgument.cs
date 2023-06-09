@@ -2,6 +2,6 @@
 {
     internal interface IParserArgument : IParserAttribute
     {
-
+        string Name { get; }
     }
 }

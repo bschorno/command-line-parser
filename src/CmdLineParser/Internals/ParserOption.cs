@@ -8,10 +8,11 @@ namespace CmdLineParser.Internals
         private readonly char _shortName;
         private readonly string _longName;
 
+        private bool _requiresValue;
+
         public char ShortName => _shortName;
 
         public string LongName => _longName;
-
 
         public ParserOption(char shortName, string longName, Expression<Func<TCommand, TAttribute>> propertySelector)
             : base(propertySelector)

@@ -4,7 +4,7 @@ namespace CmdLineParser.Internals
 {
     internal class ParserResult : IParserResult
     {
-        private readonly List<IParserResultCommand> _commands = new List<IParserResultCommand>();
+        private readonly List<ParserResultCommand> _commands = new List<ParserResultCommand>();
 
         public IEnumerable<IParserResultCommand> Commands => _commands;
 
@@ -23,12 +23,21 @@ namespace CmdLineParser.Internals
             var parentResultCommand = _commands.Last();
             if (parentResultCommand == null)
                 return;
-            attribute.ParseValue(parentResultCommand, value);
+            
+            parentResultCommand.HandleParserAttribute(attribute, value);
         }
 
-        internal IParserResultCommand GetParserResultCommand(int level)
+        public IParserResultCommand GetParserResultCommand(int level)
         {
             return _commands[level];
+        }
+
+        public void FinalizeCommands()
+        {
+            foreach (var command in _commands) 
+            {
+                command.HandleRemainingAttributes();
+            }
         }
     }
 }

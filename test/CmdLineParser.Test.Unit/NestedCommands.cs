@@ -29,7 +29,7 @@ namespace CmdLineParser.Test.Unit
             var parserBuilder = CommandLineParser.CreateBuilder();
             parserBuilder.AddCommand<ConfigParameters>("config", _ =>
             {
-                _.AddArgument(attr => attr.Path).Required();
+                _.AddArgument("path", attr => attr.Path);
                 _.AddCommand("add", command => command.AddParameters!, addCommand =>
                 {
                     addCommand.AddOption('o', "overwrite", attr => attr.Overwrite);

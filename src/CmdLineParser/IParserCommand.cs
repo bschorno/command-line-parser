@@ -18,9 +18,9 @@ namespace CmdLineParser
 
         IParserOption<K> AddOption<K>(char shortName, string longName, Expression<Func<T1, K>> propertySelector, Action<IParserOption<K>>? buildingAction);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T1, K>> propertySelector);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T1, K>> propertySelector);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T1, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T1, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
     }
 
     public interface IParserCommand<T1, T2> where T1 : new() where T2 : new()
@@ -39,9 +39,9 @@ namespace CmdLineParser
 
         IParserOption<K> AddOption<K>(char shortName, string longName, Expression<Func<T2, K>> propertySelector, Action<IParserOption<K>>? buildingAction);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T2, K>> propertySelector);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T2, K>> propertySelector);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T2, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T2, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
     }
 
     public interface IParserCommand<T1, T2, T3> where T1 : new() where T2 : new() where T3 : new()
@@ -60,9 +60,9 @@ namespace CmdLineParser
 
         IParserOption<K> AddOption<K>(char shortName, string longName, Expression<Func<T3, K>> propertySelector, Action<IParserOption<K>>? buildingAction);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T3, K>> propertySelector);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T3, K>> propertySelector);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T3, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T3, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
     }
 
     public interface IParserCommand<T1, T2, T3, T4> where T1 : new() where T2 : new() where T3 : new() where T4 : new()
@@ -73,8 +73,8 @@ namespace CmdLineParser
 
         IParserOption<K> AddOption<K>(char shortName, string longName, Expression<Func<T4, K>> propertySelector, Action<IParserOption<K>>? buildingAction);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T4, K>> propertySelector);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T4, K>> propertySelector);
 
-        IParserArgument<K> AddArgument<K>(Expression<Func<T4, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
+        IParserArgument<K> AddArgument<K>(string name, Expression<Func<T4, K>> propertySelector, Action<IParserArgument<K>>? buildingAction);
     }
 }
