@@ -24,6 +24,8 @@ namespace CmdLineParser.Internals
         }
 
         public abstract ParserResultCommand CreateParserResultCommand(ParserResult parserResult);
+
+        public abstract void InvokeCallback(ParserResult parserResult);
     }
 
     internal class ParserCommand<T1> : ParserCommand, IParserCommand<T1> where T1 : new()
@@ -102,13 +104,16 @@ namespace CmdLineParser.Internals
         {
             var objectReference = new T1();
 
-            var resultCommand = new ParserResultCommand<T1>(this, objectReference);
-            if (_callback != null)
-            {
-                T1 parameter1 = objectReference;
-                _callback.Invoke(parameter1);
-            }
-            return resultCommand;
+            return new ParserResultCommand<T1>(this, objectReference);
+        }
+
+        public override void InvokeCallback(ParserResult parserResult)
+        {
+            if (_callback == null)
+                return;
+
+            T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
+            _callback.Invoke(parameter1);
         }
     }
 
@@ -192,14 +197,17 @@ namespace CmdLineParser.Internals
             var parentReference = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
             propertyInfo.SetValue(parentReference, objectReference, null);
 
-            var resultCommand = new ParserResultCommand<T2>(this, objectReference);
-            if (_callback != null)
-            {
-                T1 parameter1 = parentReference;
-                T2 parameter2 = objectReference;
-                _callback.Invoke(parameter1, parameter2);
-            }
-            return resultCommand;
+            return new ParserResultCommand<T2>(this, objectReference);
+        }
+
+        public override void InvokeCallback(ParserResult parserResult)
+        {
+            if (_callback == null)
+                return;
+
+            T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
+            T2 parameter2 = parserResult.GetParserResultCommand(1).GetObject<T2>()!;
+            _callback.Invoke(parameter1, parameter2);
         }
     }
 
@@ -283,15 +291,18 @@ namespace CmdLineParser.Internals
             var parentReference = parserResult.GetParserResultCommand(1).GetObject<T2>()!;
             propertyInfo.SetValue(parentReference, objectReference, null);
 
-            var resultCommand = new ParserResultCommand<T3>(this, objectReference);
-            if (_callback != null)
-            {
-                T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
-                T2 parameter2 = parentReference;
-                T3 parameter3 = objectReference;
-                _callback.Invoke(parameter1, parameter2, parameter3);
-            }
-            return resultCommand;
+            return new ParserResultCommand<T3>(this, objectReference);
+        }
+
+        public override void InvokeCallback(ParserResult parserResult)
+        {
+            if (_callback == null)
+                return;
+
+            T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
+            T2 parameter2 = parserResult.GetParserResultCommand(1).GetObject<T2>()!;
+            T3 parameter3 = parserResult.GetParserResultCommand(2).GetObject<T3>()!;
+            _callback.Invoke(parameter1, parameter2, parameter3);
         }
     }
 
@@ -347,16 +358,19 @@ namespace CmdLineParser.Internals
             var parentReference = parserResult.GetParserResultCommand(2).GetObject<T3>()!;
             propertyInfo.SetValue(parentReference, objectReference, null);
 
-            var resultCommand = new ParserResultCommand<T4>(this, objectReference);
-            if (_callback != null)
-            {
-                T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
-                T2 parameter2 = parserResult.GetParserResultCommand(1).GetObject<T2>()!; ;
-                T3 parameter3 = parentReference;
-                T4 parameter4 = objectReference; 
-                _callback.Invoke(parameter1, parameter2, parameter3, parameter4);
-            }
-            return resultCommand;
+            return new ParserResultCommand<T4>(this, objectReference);
+        }
+
+        public override void InvokeCallback(ParserResult parserResult)
+        {
+            if (_callback == null)
+                return;
+
+            T1 parameter1 = parserResult.GetParserResultCommand(0).GetObject<T1>()!;
+            T2 parameter2 = parserResult.GetParserResultCommand(1).GetObject<T2>()!;
+            T3 parameter3 = parserResult.GetParserResultCommand(2).GetObject<T3>()!;
+            T4 parameter4 = parserResult.GetParserResultCommand(3).GetObject<T4>()!;
+            _callback.Invoke(parameter1, parameter2, parameter3, parameter4);
         }
     }
 }

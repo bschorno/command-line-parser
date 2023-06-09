@@ -39,5 +39,13 @@ namespace CmdLineParser.Internals
                 command.HandleRemainingAttributes();
             }
         }
+
+        public void InvokeCommands()
+        {
+            foreach (var command in _commands)
+            {
+                command.InvokeCallback(this);
+            }
+        }
     }
 }

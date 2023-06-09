@@ -68,5 +68,20 @@ namespace CmdLineParser.Test.Unit
             Assert.Equal("text.txt", parameters.Path);
             Assert.Equal(5050, parameters.Port);
         }
+
+        [Fact]
+        public void Test4()
+        {
+            var result = _parser.Parse(new string[] { "run" });
+
+            var firstCommand = result.Commands.FirstOrDefault();
+
+            Assert.NotNull(firstCommand);
+            var parameters = firstCommand.GetObject<Parameters>();
+
+            Assert.NotNull(parameters);
+            Assert.Null(parameters.Path);
+            Assert.Equal(5050, parameters.Port);
+        }
     }
 }

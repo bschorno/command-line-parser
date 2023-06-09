@@ -51,6 +51,11 @@ namespace CmdLineParser.Internals
             }
         }
 
+        public void InvokeCallback(ParserResult result)
+        {
+            _parserCommand.InvokeCallback(result);
+        }
+
         public abstract T? GetObject<T>() where T : new();
     }
 

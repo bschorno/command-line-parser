@@ -47,6 +47,7 @@ namespace CmdLineParser.Internals
             }
 
             result.FinalizeCommands();
+            result.InvokeCommands();
 
             return result;
         }
